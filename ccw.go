@@ -21,7 +21,8 @@ func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, erro
 			args = append(args, "--incognito")
 		}
 	}
-	return lorca.New("", userdir, 0, 0, args...)
+    log.Println(args)
+	return lorca.New("", userdir, 800, 600, args...)
 }
 
 func ExtendedChromium(userdir string, private bool, extensiondirs []string, args ...string) (lorca.UI, error) {
@@ -31,7 +32,7 @@ func ExtendedChromium(userdir string, private bool, extensiondirs []string, args
 		extensionArgs = append(extensionArgs, extension)
 	}
 	args = append(args, extensionArgs...)
-    log.Println(args)
+    
 	return BasicChromium(userdir, private, args...)
 }
 

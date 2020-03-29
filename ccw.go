@@ -30,7 +30,11 @@ func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, erro
 func ExtendedChromium(userdir string, private bool, extensiondirs []string, args ...string) (lorca.UI, error) {
 	var extensionArgs []string
 	for _, extension := range extensiondirs {
-		extensionArgs = append(extensionArgs, "--load-extension="+extension)
+        if _, err := os.Stat(extension); err == nil {
+            extensionArgs = append(extensionArgs, "--load-extension="+extension)
+        }else{
+            log.Println("extension load warning,", err)
+        }
 	}
 	args = append(args, extensionArgs...)
 	return BasicChromium(userdir, private, args...)
@@ -39,6 +43,9 @@ func ExtendedChromium(userdir string, private bool, extensiondirs []string, args
 func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensionhashes []string, args ...string) (lorca.UI, error) {
 	var extensionArgs []string
 	for index, extension := range extensiondirs {
+        if _, err := os.Stat(extension); err != nil {
+            return nil, err
+        }
 		if hash, err := hashdir.Create(extension, "md5"); err != nil {
 			if extensionhashes[index] == hash {
 				extensionArgs = append(extensionArgs, "--load-extension="+extension)

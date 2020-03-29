@@ -2,7 +2,8 @@ package ccw
 
 import (
 	"os"
-
+    "log"
+    
 	"github.com/zserge/lorca"
 )
 
@@ -30,6 +31,7 @@ func ExtendedChromium(userdir string, private bool, extensiondirs []string, args
 		extensionArgs = append(extensionArgs, extension)
 	}
 	args = append(args, extensionArgs...)
+    log.Println(args)
 	return BasicChromium(userdir, private, args...)
 }
 

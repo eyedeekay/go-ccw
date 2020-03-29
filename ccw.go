@@ -40,7 +40,7 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 	var extensionArgs []string
 	for index, extension := range extensiondirs {
 		if hash, err := hashdir.Create(extension, "md5"); err != nil {
-			if extensionhash == hash {
+			if extensionhashes[index] == hash {
 				extensionArgs = append(extensionArgs, "--load-extension="+extension)
 			} else {
 				return nil, fmt.Errorf("hash mismatch error on extension", extension)

@@ -46,7 +46,7 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 		if _, err := os.Stat(extension); err != nil {
 			return nil, err
 		}
-		if hash, err := hashdir.Create(extension, "md5"); err == nil {
+		if hash, err := hashdir.Create(extension, "sha256"); err == nil {
 			if extensionhashes[index] == hash {
 				extensionArgs = append(extensionArgs, "--load-extension="+extension)
 			} else {

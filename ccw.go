@@ -6,7 +6,7 @@ import (
 	"os"
 
 	hashdir "github.com/sger/go-hashdir"
-	"github.com/zserge/lorca"
+	"github.com/eyedeekay/lorca"
 )
 
 func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, error) {
@@ -24,7 +24,7 @@ func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, erro
 		}
 	}
 	log.Println(args)
-	return lorca.New("", userdir, 800, 600, args...)
+	return lorca.NewChromium("", userdir, 800, 600, args...)
 }
 
 func ExtendedChromium(userdir string, private bool, extensiondirs []string, args ...string) (lorca.UI, error) {

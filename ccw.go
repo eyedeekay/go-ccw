@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	hashdir "github.com/sger/go-hashdir"
 	"github.com/eyedeekay/lorca"
+	hashdir "github.com/sger/go-hashdir"
 )
 
 func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, error) {
@@ -46,7 +46,7 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 		if _, err := os.Stat(extension); err != nil {
 			return nil, err
 		}
-		if hash, err := hashdir.Create(extension, "md5"); err != nil {
+		if hash, err := hashdir.Create(extension, "md5"); err == nil {
 			if extensionhashes[index] == hash {
 				extensionArgs = append(extensionArgs, "--load-extension="+extension)
 			} else {

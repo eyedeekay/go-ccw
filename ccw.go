@@ -50,7 +50,7 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 			if extensionhashes[index] == hash {
 				extensionArgs = append(extensionArgs, "--load-extension="+extension)
 			} else {
-				return nil, fmt.Errorf("hash mismatch error on extension", extension, hash)
+				return nil, fmt.Errorf("hash mismatch error on extension", extension, hash, extensionhashes[index])
 			}
 		} else {
 			return nil, fmt.Errorf("hash calculation error on extension", extension, err)

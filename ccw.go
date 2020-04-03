@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/eyedeekay/lorca"
+	"github.com/zserge/lorca"
 	hashdir "github.com/sger/go-hashdir"
 )
 

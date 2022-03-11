@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/sger/go-hashdir v0.0.1
+	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/zserge/lorca v0.1.9
 )
 

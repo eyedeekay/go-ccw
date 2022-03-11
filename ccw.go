@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
-	"github.com/zserge/lorca"
 	hashdir "github.com/sger/go-hashdir"
+	"github.com/zserge/lorca"
 )
 
 func BasicChromium(userdir string, private bool, args ...string) (lorca.UI, error) {
@@ -31,12 +32,13 @@ func ExtendedChromium(userdir string, private bool, extensiondirs []string, args
 	var extensionArgs []string
 	for _, extension := range extensiondirs {
 		if _, err := os.Stat(extension); err == nil {
-			extensionArgs = append(extensionArgs, "--load-extension="+extension)
+			extensionArgs = append(extensionArgs, extension)
 		} else {
 			log.Println("extension load warning,", err)
 		}
 	}
-	args = append(args, extensionArgs...)
+	finalExtensionArgs := "--load-extension=" + strings.Join(extensionArgs, ",")
+	args = append(args, finalExtensionArgs)
 	return BasicChromium(userdir, private, args...)
 }
 
@@ -48,7 +50,7 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 		}
 		if hash, err := hashdir.Create(extension, "sha256"); err == nil {
 			if extensionhashes[index] == hash {
-				extensionArgs = append(extensionArgs, "--load-extension="+extension)
+				extensionArgs = append(extensionArgs, extension)
 			} else {
 				return nil, fmt.Errorf("hash mismatch error on extension", extension, hash, extensionhashes[index])
 			}
@@ -56,7 +58,8 @@ func SecureExtendedChromium(userdir string, private bool, extensiondirs, extensi
 			return nil, fmt.Errorf("hash calculation error on extension", extension, err)
 		}
 	}
-	args = append(args, extensionArgs...)
+	finalExtensionArgs := "--load-extension=" + strings.Join(extensionArgs, ",")
+	args = append(args, finalExtensionArgs)
 	return BasicChromium(userdir, private, args...)
 }
 
